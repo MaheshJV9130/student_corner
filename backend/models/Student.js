@@ -9,6 +9,7 @@ const student_schema = new Schema({
   branch: { type: String,  },
   year: { type: String, },
   division: { type: String,  },
+  profile:String
 });
 const Student = model("Student",student_schema)
 export default Student
