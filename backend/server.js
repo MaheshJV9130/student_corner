@@ -9,7 +9,7 @@ import {v2 as cloudinary} from 'cloudinary'
 // cookieParser
 const app = express()
 const corsOption = {
-    origin: 'http://localhost:5173',
+    origin: 'https://student-corner-gilt.vercel.app/',
     methods:['GET','POST','PUT'],
     credentials:true
 }
