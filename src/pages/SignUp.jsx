@@ -1,21 +1,32 @@
-import React from 'react'
-import { useState } from 'react';
+import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
+  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-      } = useForm()
+  const onSubmit = async(data) => {
+    let req = await fetch('http://localhost:3000/auth/new-user',{method:"POST",headers:{"Content-Type":"application/json"},credentials:"include",body:JSON.stringify(data)})
+    req = await req.json()
+    if(req.status == 200){
+      toast.success(req.message)
+      navigate('/feed')
+    }else{
+      toast.error(req.message)
+
+    }
     
-      const onSubmit = (data) => console.log(data)
-    
+  };
+
   return (
-    <div className='h-screen bg-[url(/BG_img.png)] bg-no-repeat bg-center bg-cover'>
+    <div className="h-screen bg-[url(/BG_img.png)] bg-no-repeat bg-center bg-cover">
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="w-full max-w-md bg-white dark:bg-gray-800/70 rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -25,10 +36,8 @@ const SignUp = () => {
             Create your account
           </p>
 
-          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-
-
-             <div>
+          <form className="space-y-5"  onSubmit={handleSubmit(onSubmit)}>
+            <div>
               <label
                 htmlFor="text"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2"
@@ -36,8 +45,8 @@ const SignUp = () => {
                 Your Name
               </label>
               <input
-                {...register("name", { required: true })}
-                id="name"
+                {...register("student_name", { required: true })}
+                id="student_name"
                 type="text"
                 placeholder="ABC"
                 required
@@ -79,7 +88,6 @@ const SignUp = () => {
               />
             </div>
 
-
             <button
               type="submit"
               className="w-full inline-flex items-center cursor-pointer justify-center gap-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
@@ -90,7 +98,7 @@ const SignUp = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

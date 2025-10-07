@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async(data) => {
+    let req = await fetch('http://localhost:3000/auth/login',{method:"POST",headers:{"Content-Type":"application/json"},credentials:"include",body:JSON.stringify(data)})
+        req = await req.json()
+        if(req.status == 200){
+          toast.success(req.message)
+          navigate('/feed')
+        }else{
+          toast.error(req.message)
+        }
+  };
 
   return (
-    <div className='h-screen bg-[url(/BG_img.png)] bg-no-repeat bg-center bg-cover'>
+    <div className="h-screen bg-[url(/BG_img.png)] bg-no-repeat bg-center bg-cover">
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="w-full max-w-md bg-white dark:bg-gray-800/70 rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">

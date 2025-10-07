@@ -6,9 +6,8 @@ const student_schema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   roll_number: { type: Number,  },
+  year:String,
   branch: { type: String,  },
-  year: { type: String, },
-  division: { type: String,  },
   profile:String
 });
 const Student = model("Student",student_schema)
